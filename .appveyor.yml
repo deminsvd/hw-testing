@@ -16,12 +16,9 @@ build: off
 
 build_script:
   - npm run build
-
-# Перед запуском тестов — запустите сервер и дождитесь его запуска
-before_script:
   # Запуск сервера в фоне
   - start /b npm run start
-  # Ожидаем, пока сервер станет доступен
+  # Проверка, что сервер запущен
   - |
       powershell -Command "
       $maxRetries = 20; # число попыток
@@ -32,13 +29,13 @@ before_script:
             break
           }
         } catch {
-          # ничего не делаем, ждем дальше
+          # ничего не делаем
         }
         Start-Sleep -Seconds 1
       }
       if ($i -eq $maxRetries) { throw 'Server did not start in time' }
       "
-      
+
 # Тестовые команды
 test_script:
   - npm run lint
