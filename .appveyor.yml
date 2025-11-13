@@ -3,40 +3,43 @@ environment:
 
 branches:
   only:
-    - master  # ветка git
+    - master
     - main
 
-cache: node_modules  # кеширование
+cache: node_modules
 
 install:
   - npm install
   - npx puppeteer browsers install chrome
 
-build: off  # отключаем встроенную в appveyor систему сборки
-
-before_script:
-  - start /b npm run start  # запуск сервера в фоне (Windows)
-  - |
-    # Ожидание, пока сервер не станет доступен (на примере curl)
-    powershell -Command "
-    $maxRetries = 15; # число попыток
-    for ($i=0; $i -lt $maxRetries; $i++) {
-      try {
-        $response = Invoke-WebRequest -Uri http://localhost:9000 -UseBasicParsing -TimeoutSec 1
-        if ($response.StatusCode -eq 200) {
-          break
-        }
-      } catch {
-        # ничего не делаем, ждем дальше
-      }
-      Start-Sleep -Seconds 1
-    }
-    if ($i -eq $maxRetries) { throw 'Server did not start in time' }
-    "
+build: off
 
 build_script:
-  - npm run build   # команда сборки
+  - npm run build
 
+# Перед запуском тестов — запустите сервер и дождитесь его запуска
+before_script:
+  # Запуск сервера в фоне
+  - start /b npm run start
+  # Ожидаем, пока сервер станет доступен
+  - |
+      powershell -Command "
+      $maxRetries = 20; # число попыток
+      for ($i=0; $i -lt $maxRetries; $i++) {
+        try {
+          $response = Invoke-WebRequest -Uri http://localhost:9000 -UseBasicParsing -TimeoutSec 1
+          if ($response.StatusCode -eq 200) {
+            break
+          }
+        } catch {
+          # ничего не делаем, ждем дальше
+        }
+        Start-Sleep -Seconds 1
+      }
+      if ($i -eq $maxRetries) { throw 'Server did not start in time' }
+      "
+      
+# Тестовые команды
 test_script:
   - npm run lint
   - npm run test
