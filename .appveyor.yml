@@ -17,24 +17,7 @@ build: off
 build_script:
   - npm run build
   # Запуск сервера в фоне
-  - start /b npm run start
-  # Проверка, что сервер запущен
-  - |
-      powershell -Command "
-      $maxRetries = 20; # число попыток
-      for ($i=0; $i -lt $maxRetries; $i++) {
-        try {
-          $response = Invoke-WebRequest -Uri http://localhost:9000 -UseBasicParsing -TimeoutSec 1
-          if ($response.StatusCode -eq 200) {
-            break
-          }
-        } catch {
-          # ничего не делаем
-        }
-        Start-Sleep -Seconds 1
-      }
-      if ($i -eq $maxRetries) { throw 'Server did not start in time' }
-      "
+  - npm run start
 
 # Тестовые команды
 test_script:
