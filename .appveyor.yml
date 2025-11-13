@@ -9,7 +9,8 @@ branches:
 cache: node_modules  # кеширование
 
 install:
-  - npm install  # команда установки зависимостей
+  - npm install
+  - npx puppeteer@latest install chrome
 
 build: off  # отключаем встроенную в appveyor систему сборки
 
