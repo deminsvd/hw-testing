@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+}
+
+#payment-widget-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.payment-icons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.payment-icons img {
+  width: 50px;
+  height: auto;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.payment-icons img.active {
+  filter: none;
+}
+
+.card-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#cardNumber {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#validateBtn {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+#validateBtn:hover {
+  background-color: #0056b3;
+}
+
+.validation-result {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
