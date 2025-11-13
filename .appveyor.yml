@@ -19,7 +19,7 @@ build_script:
 
 # Тестовые команды
 test_script:
-  - npm run start
+  - start /b npm run start
   - npm run lint
   - npm run test
   - npm run e2e
